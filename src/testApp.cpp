@@ -20,6 +20,11 @@ void testApp::setup(){
 	nebulaImg.loadImage("corona.png");
 	nebulaImg.setAnchorPercent(0.5, 0.5);
 	
+	ALLOWTRAILS = false;
+	ALLOWGRAVITY = false;
+	
+	//set gravity vector
+	gravity.set(0, 0.015); //number was tuned until i liked the motion
 }
 
 //--------------------------------------------------------------
@@ -31,6 +36,11 @@ void testApp::update(){
 		if (!particles[i].isDead) {
 			//particles[i].resetForce();
 			//particles[i].addDampingForce();
+
+			if (ALLOWGRAVITY) {
+				particles[i].addForce(gravity);
+			}
+			
 			particles[i].update();
 			stillAlive.push_back(particles[i]);
 		} 
@@ -51,6 +61,11 @@ void testApp::draw(){
 	emitterImg.draw(mouseX, mouseY, emitterSize, emitterSize);
 	for (int i = 0; i < particles.size(); i++){
 		particles[i].draw();
+		if (ALLOWTRAILS) {
+			particles[i].drawTrails();
+			//set color back to normal (white)
+			ofSetColor(255, 255, 255);
+		}
 	}
 	
 	ofDrawBitmapString("fps: " + ofToString(ofGetFrameRate()), 50, 50);
@@ -58,7 +73,16 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-
+	switch (key) {
+		case 't':
+			ALLOWTRAILS = !ALLOWTRAILS;
+			break;
+		case 'g':
+			ALLOWGRAVITY = !ALLOWGRAVITY;
+			break;
+		default:
+			break;
+	}	
 }
 
 //--------------------------------------------------------------

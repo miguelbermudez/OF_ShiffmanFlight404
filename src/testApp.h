@@ -22,6 +22,8 @@ class testApp : public ofBaseApp{
 	
 		float prevMouseX;
 		float prevMouseY;
+	
+		ofxVec2f gravity;
 		
 		ofImage particleImg;
 		vector<Particle> particles;
@@ -31,6 +33,10 @@ class testApp : public ofBaseApp{
 		
 		ofImage nebulaImg;
 		int nebulaSize;
+	
+		bool ALLOWTRAILS;
+		bool ALLOWGRAVITY;
+		
 
 };
 

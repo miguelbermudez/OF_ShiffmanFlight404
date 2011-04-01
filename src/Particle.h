@@ -4,6 +4,7 @@
 
 #include "ofMain.h"
 #include "ofxVec2f.h"
+#include "ofxVec3f.h"
 
 class Particle 
 {
@@ -13,9 +14,12 @@ class Particle
 		ofxVec2f frc;
 		
 		ofImage *particleImg;
-		
+		vector<ofxVec3f> loc;			//vector of particle's postions
+
+		float trailVerticies[6];
 		float damping;
 		float particleRadius;
+		float trailWidth;
 		float age;
 		float particleAlpha;
 		float lifespan;
@@ -29,6 +33,7 @@ class Particle
 		
 		void resetForce();
 		void addForce(float x, float y);
+		void addForce(ofxVec2f aVector);
 		void addRepulsionForce(float x, float y, float radius, float scale);
 		void addAttractionForce(float x, float y, float radius, float scale);
 		
@@ -40,6 +45,7 @@ class Particle
 		void setInitialCondition(float px, float py, float vx, float vy);
 		void update();	
 		void draw();
+		void drawTrails();
 		void bounceOffWalls();
 		
 		float heading2D(ofxVec2f vt);
